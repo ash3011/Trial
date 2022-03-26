@@ -20,9 +20,6 @@
             "ssh_username": "{{user `ssh_username`}}",
             "ami_name": "csye6225_{{timestamp}}",
             "ami_description": "Linux 2 AMI for csye6225",
-            "ami_users": [
-                ""
-            ],
             "ami_block_device_mappings": [
                 {
                     "delete_on_termination": true,
