@@ -5,7 +5,7 @@ const config = {
         host: env.HOST,
         user: env.USER,
         password: env.PASSWORD,
-        database: userdb,
+        database: env.DB,
         dialect: "mysql",
         port:3306,
         pool: {
