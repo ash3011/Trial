@@ -3,8 +3,7 @@
         "AWS_ACCESS_KEY": "",
         "AWS_SECRET_ACCESS": "",
         "aws_region": "us-east-1",
-        "subnet_id": "subnet-0a993dd04ab7dd561",
-        "source_ami": "ami-0c293f3f676ec4f90",
+        "source_ami": "ami-0c02fb55956c7d316",
         "ssh_username": "ec2-user"
     },
     "builders": [
@@ -15,7 +14,6 @@
             "secret_key": "{{user `AWS_SECRET_ACCESS`}}",
             "region": "{{user `aws_region`}}",
             "instance_type": "t2.micro",
-            "subnet_id": "{{user `subnet_id`}}",
             "source_ami": "{{user `source_ami`}}",
             "ssh_username": "{{user `ssh_username`}}",
             "ami_name": "csye6225_{{timestamp}}",
