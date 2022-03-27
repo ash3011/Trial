@@ -13,10 +13,13 @@ const fs = require('fs')
 
 
 //Creating a new instance of S3:
+const AWS = require("aws-sdk");
 AWS.config.update({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_ACCESS_KEY_SECRET,
     region: process.env.AWS_REGION
 });
-const s3 = new AWS.S3();
+s3 = new AWS.S3({ apiVersion: "2006-03-01" });
 // const bucket = process.env.AWS_BUCKET_NAME;
 
 // Update pic
