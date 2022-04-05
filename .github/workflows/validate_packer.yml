@@ -50,7 +50,7 @@ jobs:
           zip -r webservice.zip Trial
           ls -l
           echo "PWD: $(pwd)"
-          cd webservice
+          cd Trial
           echo "mkdir"; mkdir appDir
           cp ../webservice.zip appDir
           ls -l appDir
