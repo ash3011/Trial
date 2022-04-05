@@ -1,21 +1,61 @@
-name: Packer Validation
+# This is a basic workflow to help you get started with Actions
 
-env:
-  CI: true
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  ssh_username: "ec2-user"
+name: CI
 
+# Controls when the workflow will run
 on:
+  # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+    branches: [ main ]
 
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  packer:
+  # This workflow contains a single job called "build"
+  test:
+    # The type of runner that the job will run on
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+          
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      
+      # Initialize Node.js
+      - name: Install Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      # Runs a set of commands using the runners shell
+      - name: NPM tests
+        run: |
+          cd app
+          pwd
+          npm ci
+          echo "PWD: $(pwd)"
+          ls -ltr
+      
+      #build zip file
+      - name: build zip file
+        run: |
+          echo "PWD: $(pwd)"
+          cd ../
+          zip -r webservice.zip webservice
+          ls -l
+          echo "PWD: $(pwd)"
+          cd webservice
+          echo "mkdir"; mkdir appDir
+          cp ../webservice.zip appDir
+          ls -l appDir
+
+      # build ami
       - name: checkout repository
         uses: actions/checkout@v2
 
@@ -24,3 +64,22 @@ jobs:
         with:
           templateFile: "ami.json"
           workingDir: "packer"
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          PACKER_LOG: 1
+          GITHUB_REPO_PATH: ${{ github.workspace }}
+
+      - name: Configuring AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.GHUSER_ACTION_KEY }}
+          aws-secret-access-key: ${{ secrets.GHUSER_SECRET_KEY }}
+          aws-region: us-east-1
+      - name: Copying artifact to S3
+        run: |
+          rm -rf aws
+          aws deploy push --application-name csye6225webapp --description "Copying the latest revision for csye6225webapplication-${{ github.sha }}.zip" --ignore-hidden-files --s3-location s3://codedeploy.aishwaryasawant.me/csye6225-webapplication-${{ github.sha}}.zip  --source .
+      - name: Using code deploy
+        run: |
+          aws deploy create-deployment --application-name csye6225webapp --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name csye6225-webapp-deployment --file-exists-behavior OVERWRITE --s3-location bucket=codedeploy.aishwaryasawant.me,key=csye6225-webapplication-${{ github.sha }}.zip,bundleType=zip
