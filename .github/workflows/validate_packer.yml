@@ -46,12 +46,12 @@ jobs:
         run: |
           echo "PWD: $(pwd)"
           cd ../
-          zip -r trial.zip Trial
+          zip -r webservice.zip Trial
           ls -l
           echo "PWD: $(pwd)"
           cd Trial
           echo "mkdir"; mkdir appDir
-          cp ../trial.zip appDir
+          cp ../webservice.zip appDir
           ls -l appDir
 
       # build ami
@@ -65,7 +65,7 @@ jobs:
         uses: hashicorp/packer-github-actions@master
         with:
           command: build
-          target: ./packer/ami.json.pkr.hcl
+          target: ./packerbuild.ami.json.pkr.hcl
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
