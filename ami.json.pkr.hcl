@@ -89,7 +89,7 @@ build {
 
   provisioner "file" {
     destination = "/tmp/webservice.zip"
-    source      = "${var.GITHUB_PATH}/appDir/webservice.zip"
+    source      = "./${var.GITHUB_PATH}/appDir/webservice.zip"
   }
 
   provisioner "shell" {
