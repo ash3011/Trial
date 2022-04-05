@@ -67,7 +67,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           PACKER_LOG: 1
-          GITHUB_REPO_PATH: ${{ GITHUB.WORKSPACE }}
+          GITHUB_REPO_PATH: ${{ GITHUB_WORKFLOW }}
 
       - name: Configuring AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
