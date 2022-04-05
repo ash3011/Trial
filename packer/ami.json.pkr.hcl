@@ -89,7 +89,7 @@ build {
 
   provisioner "file" {
     destination = "/tmp/webservice.zip"
-    source      = "appDir/webservice.zip"
+    source      = "/home/runner/work/Trial/Trial/appDir/webservice.zip"
   }
 
   provisioner "shell" {
