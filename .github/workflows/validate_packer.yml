@@ -47,7 +47,7 @@ jobs:
         run: |
           echo "PWD: $(pwd)"
           cd ../
-          zip -r webservice.zip webservice
+          zip -r webservice.zip Trial
           ls -l
           echo "PWD: $(pwd)"
           cd webservice
