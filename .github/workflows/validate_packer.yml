@@ -59,7 +59,7 @@ jobs:
         uses: actions/checkout@v2
         
       - name: Print workspace path
-        run: echo $GITHUB_REPO_PATH && pwd
+        run: echo $GITHUB_REPO_PATH
 
       - name: Build Packer Template
         uses: hashicorp/packer-github-actions@master
