@@ -57,14 +57,15 @@ jobs:
       # build ami
       - name: checkout repository
         uses: actions/checkout@v2
+        
+      - name: Print workspace path
+        run: echo $GITHUB_REPO_PATH && pwd
 
       - name: Build Packer Template
         uses: hashicorp/packer-github-actions@master
         with:
           command: build
           target: packer/ami.json.pkr.hcl
-      - name: Print workspace path
-        run: echo $GITHUB_REPO_PATH && pwd
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
