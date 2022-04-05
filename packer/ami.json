@@ -37,7 +37,7 @@
         
         {
             "type": "file",
-            "source": "{{user `GITHUB_PATH`}}/appDir/webservice.zip",
+            "source": "{{user `GITHUB_REPO_PATH`}}/appDir/webservice.zip",
             "destination": "/tmp/webservice.zip"
         },
         {
