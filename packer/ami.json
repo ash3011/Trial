@@ -37,7 +37,7 @@
         
         {
             "type": "file",
-            "source": "/home/runner/work/Trial/Trial/appDir/webservice.zip",
+            "source": "/home/runner/work/Trial/appDir/webservice.zip",
             "destination": "/tmp/webservice.zip"
         },
         {
