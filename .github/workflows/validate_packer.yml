@@ -46,12 +46,12 @@ jobs:
         run: |
           echo "PWD: $(pwd)"
           cd ../
-          zip -r webservice.zip Trial
+          zip -r trial.zip Trial
           ls -l
           echo "PWD: $(pwd)"
           cd Trial
           echo "mkdir"; mkdir appDir
-          cp ../webservice.zip appDir
+          cp ../trial.zip appDir
           ls -l appDir
 
       # build ami
